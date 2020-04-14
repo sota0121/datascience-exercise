@@ -23,3 +23,25 @@
 ## Output
 
 - Basically, jupyter notebook
+
+
+## Getting started
+
+build image and run container
+
+```bash
+$ docker-compose up -d --build
+$ docker container ls
+# CONTAINER ID        IMAGE                        COMMAND             CREATED             STATUS              PORTS                    NAMES
+# XXXXXXXXXXXX        slack-msg-analysis_python3   "/bin/bash"         6 seconds ago       Up 6 seconds        0.0.0.0:8888->8000/tcp   ds-py3.7
+```
+
+execute docker container
+
+```bash
+# execute bash
+$ docker exec -it ds-py3.7 bash
+# execute jupyter
+$ docker exec -it ds-py3.7 jupyter notebook
+# and access localhost:8888
+```
