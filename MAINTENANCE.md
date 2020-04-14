@@ -18,3 +18,6 @@
 7. Merge pull requests (topic branch -> master)
 8. Loop (from 4 to 7) in issues
 
+## Output
+
+- Basically, jupyter notebook
