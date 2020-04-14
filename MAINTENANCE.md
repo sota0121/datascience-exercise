@@ -11,6 +11,9 @@
 3. Clone (or pull) repository
 4. Create topic branch
    1. corresponding to an issue
+   2. **Fist** commit empty (with 'Close #n')
+   3. **Fist** push empty
+   4. **Fist** create pull request (with 'WIP' on top of title)
 5. Push and create pull request
    1. create pull request as soon as.
    2. corresponding to an issue
