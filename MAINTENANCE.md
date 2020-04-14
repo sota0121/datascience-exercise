@@ -13,7 +13,9 @@
    1. corresponding to an issue
 5. Push and create pull request
    1. create pull request as soon as.
-6. Commit and push (issue number on commit message)
+   2. corresponding to an issue
+   3. with issue number (to close)
+6. Commit and push
    1. pull request is automatically updated
 7. Merge pull requests (topic branch -> master)
 8. Loop (from 4 to 7) in issues
