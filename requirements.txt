@@ -26,6 +26,7 @@ jupyter-core==4.6.3
 jupyterthemes==0.20.0
 kiwisolver==1.2.0
 lesscpy==0.14.0
+lxml==4.5.0
 MarkupSafe==1.1.1
 matplotlib==3.2.1
 mccabe==0.6.1
@@ -72,5 +73,6 @@ wcwidth==0.1.9
 webencodings==0.5.1
 widgetsnbextension==3.5.1
 wordcloud==1.6.0
+xlrd==1.2.0
 yapf==0.29.0
 zipp==3.1.0
