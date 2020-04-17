@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
  
 ENV PYTHON_VERSION 3.7.3
+ENV PYTHON_VERSION_2 3.7
 ENV HOME /root
 # PYTHON
 ENV PYTHON_ROOT $HOME/local/bin/python-$PYTHON_VERSION
@@ -47,6 +48,7 @@ RUN apt-get install -y tzdata \
 COPY ./requirements.txt requirements.txt
 RUN pip install -U pip && pip install -r requirements.txt \
  && jupyter notebook --generate-config --allow-root \
+ && jt -t grade3 -f source \
  && echo "c.NotebookApp.ip = '0.0.0.0'" >> ${JUPYTER_CONFIG} \
  && echo "c.NotebookApp.port = 8000" >> ${JUPYTER_CONFIG} \
  && echo "c.NotebookApp.open_browser = False" >> ${JUPYTER_CONFIG} \
@@ -56,3 +58,15 @@ RUN pip install -U pip && pip install -r requirements.txt \
  && echo "c.MultiKernelManager.default_kernel_name = 'python3.6'" >> ${JUPYTER_CONFIG} \
  && echo "c.IPKernelApp.pylab = 'inline'" >> ${JUPYTER_CONFIG} \
  && echo "c.InlineBackend.figure_formats = {'png', 'retina'}" >> ${JUPYTER_CONFIG}
+
+# Enable using japanese on Matplotlib
+# ref: https://qiita.com/kamuiroeru/items/6853f14dc493ec5063f7
+# ref: https://qiita.com/nassy20/items/f67c3ce196558b14dfca
+# ref: https://qiita.com/gymnstcs/items/50432a12fb9139b316bc
+RUN curl -L  "https://ipafont.ipa.go.jp/IPAexfont/ipaexg00401.zip" > font.zip
+RUN unzip font.zip
+RUN cp -f ipaexg00401/ipaexg.ttf $PYTHON_ROOT/lib/python$PYTHON_VERSION_2/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf
+RUN echo "font.family : IPAexGothic" >>  $PYTHON_ROOT/lib/python$PYTHON_VERSION_2/site-packages/matplotlib/mpl-data/matplotlibrc
+RUN cd ~/.config/matplotlib
+RUN rm -f fontList.py3k.cache
+RUN rm -f fontList.json
