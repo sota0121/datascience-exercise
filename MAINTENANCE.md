@@ -46,5 +46,8 @@ execute docker container
 $ docker exec -it ds-py3.7 bash
 # execute jupyter
 $ docker exec -it ds-py3.7 jupyter notebook
-# and access localhost:8888
+$ docker exec -it ds-py3.7 jupyter lab
+# jupyter port 8000 on docker container
+# docker port 8000 >> host port 8888
+# so, access localhost:8888 on host machine web browser
 ```
