@@ -1,72 +1,12 @@
-FROM ubuntu:18.04
- 
-ENV PYTHON_VERSION 3.7.3
-ENV PYTHON_VERSION_2 3.7
-ENV HOME /root
-# PYTHON
-ENV PYTHON_ROOT $HOME/local/bin/python-$PYTHON_VERSION
-ENV PATH $PYTHON_ROOT/bin:$PATH
-ENV PYENV_ROOT $HOME/.pyenv
-# Jupyter Notebook config
-ENV JUPYTER_CONFIG /root/.jupyter/jupyter_notebook_config.py
- 
-RUN apt-get update && apt-get upgrade -y \
- && apt-get install -y tzdata
-# timezone setting
-ENV TZ=Asia/Tokyo
-RUN apt-get install -y tzdata \
-    build-essential \
-    curl \
-    git \
-    libbz2-dev \
-    libcurl4-openssl-dev \
-    libffi-dev \
-    liblzma-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    libpq-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    libxml2-dev \
-    llvm \
-    make \
-    r-base \
-    tk-dev \
-    unzip \
-    vim \
-    wget \
-    xz-utils \
-    zlib1g-dev \
- && apt-get autoremove -y && apt-get clean \
- && git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT \
- && $PYENV_ROOT/plugins/python-build/install.sh \
- && /usr/local/bin/python-build -v $PYTHON_VERSION $PYTHON_ROOT \
- && rm -rf $PYENV_ROOT
+FROM python:3.9.4
 
- # install additional packages
-COPY ./requirements.txt requirements.txt
-RUN pip install -U pip && pip install -r requirements.txt \
- && jupyter notebook --generate-config --allow-root \
- && jt -t grade3 -f source \
- && echo "c.NotebookApp.ip = '0.0.0.0'" >> ${JUPYTER_CONFIG} \
- && echo "c.NotebookApp.port = 8000" >> ${JUPYTER_CONFIG} \
- && echo "c.NotebookApp.open_browser = False" >> ${JUPYTER_CONFIG} \
- && echo "c.NotebookApp.allow_root = True" >> ${JUPYTER_CONFIG} \
- && echo "c.NotebookApp.token = ''" >> ${JUPYTER_CONFIG} \
- && echo "c.NotebookApp.iopub_data_rate_limit=10000000000" >> ${JUPYTER_CONFIG} \
- && echo "c.MultiKernelManager.default_kernel_name = 'python3.6'" >> ${JUPYTER_CONFIG} \
- && echo "c.IPKernelApp.pylab = 'inline'" >> ${JUPYTER_CONFIG} \
- && echo "c.InlineBackend.figure_formats = {'png', 'retina'}" >> ${JUPYTER_CONFIG}
+WORKDIR /usr/src/app
 
-# Enable using japanese on Matplotlib
-# ref: https://qiita.com/kamuiroeru/items/6853f14dc493ec5063f7
-# ref: https://qiita.com/nassy20/items/f67c3ce196558b14dfca
-# ref: https://qiita.com/gymnstcs/items/50432a12fb9139b316bc
-RUN curl -L  "https://ipafont.ipa.go.jp/IPAexfont/ipaexg00401.zip" > font.zip
-RUN unzip font.zip
-RUN cp -f ipaexg00401/ipaexg.ttf $PYTHON_ROOT/lib/python$PYTHON_VERSION_2/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf
-RUN echo "font.family : IPAexGothic" >>  $PYTHON_ROOT/lib/python$PYTHON_VERSION_2/site-packages/matplotlib/mpl-data/matplotlibrc
-RUN cd ~/.config/matplotlib
-RUN rm -f fontList.py3k.cache
-RUN rm -f fontList.json
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+RUN chmod +x ./exec_jupyter_on_container.sh
+
+CMD [ "bash" ]
