@@ -3,11 +3,11 @@ services:
   python3:
     restart: always
     build: .
-    container_name: 'ds-py3.7'
+    container_name: 'ds-py3.9'
     working_dir: '/root/dev/'
     tty: true
     ports:
-        - "8888:8000"
+        - "8888:8888"
     command: /bin/bash
     volumes: 
         - ./:/root/dev/
