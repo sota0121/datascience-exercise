@@ -27,7 +27,7 @@ docker compose up -d --build
 ```
 
 ```bash
-docker run exec -it ds-py3.9 bash
+docker exec -it ds-py3.9 bash
 ```
 
 ```bash
