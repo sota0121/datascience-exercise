@@ -3,7 +3,7 @@ gensim==4.0.1
 Janome==0.4.1
 joblib==1.0.1
 jupyter==1.0.0
-jupyterlab==3.0.14
+jupyterlab==3.0.17
 jupyterthemes==0.20.0
 matplotlib==3.4.1
 pandas==1.2.4
