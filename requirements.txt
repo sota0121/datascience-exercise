@@ -1,7 +1,7 @@
 flake8==3.9.1
 gensim==4.0.1
 Janome==0.4.1
-joblib==1.0.1
+joblib==1.2.0
 jupyter==1.0.0
 jupyterlab==3.0.14
 jupyterthemes==0.20.0
